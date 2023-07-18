@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .popup {
+      font-family: Arial, sans-serif;
+    }
+
+    .popup {
+      position: fixed;
+      left: calc(50% - 150px); /* Center horizontally */
+      bottom: -300px; /* Initial position outside the screen */
+      transform: translateY(100%);
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.5s ease-in-out, bottom 0.5s ease-in-out;
+      z-index: 9999; /* Adjust the z-index value */
+    }
+
+    .popup.show {
+      transform: translateY(0%); /* Slide in from the bottom */
+      bottom: 10px; /* Adjusted position */
+    }
+
+    .popup span.amount {
+      color: green;
+    }
+
+    .popup span.name {
+      color: orange;
+    }
+
+    .popup:nth-child(even) span.name {
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="popup" id="signupPopup">
+    <span id="signupMessage"></span>
+  </div>
+
+  <div class="popup" id="transactionPopup">
+    <span id="transactionMessage"></span>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      setInterval(showPopup, 10000); // Show popup every 10 seconds
+    });
+
+    function showPopup() {
+      var names = [
+        "John", "Alice", "Emma", "Liam", "Olivia", "Noah", "Sophia", "Jacob", "Isabella", "Mason",
+        "Ava", "William", "Mia", "Ethan", "Charlotte", "James", "Amelia", "Alexander", "Harper", "Michael",
+        "Evelyn", "Benjamin", "Abigail", "Daniel", "Emily", "Henry", "Elizabeth", "Joseph", "Sofia", "Samuel",
+        "Ella", "Matthew", "Victoria", "David", "Grace", "Jackson", "Chloe", "Anthony", "Scarlett", "Andrew",
+        "Zoey", "Lucas", "Lily", "Gabriel", "Avery", "Christopher", "Eleanor", "Christian", "Hannah",
+        "Joshua", "Madison", "Samuel", "Samantha", "Ellie", "Poppy", "Phoebe", "Scarlett"
+      ]; // Random names
+
+      var countries = [
+        "USA", "Canada", "UK", "Australia", "Germany", "France", "Spain", "Italy", "China", "India",
+        "Japan", "Brazil", "Mexico", "South Korea", "Russia", "Netherlands", "Switzerland", "Sweden", "Norway", "Denmark",
+        "Finland", "Belgium", "Austria", "Greece", "Portugal", "Poland", "Czech Republic", "Hungary", "Turkey", "Israel",
+        "Saudi Arabia", "United Arab Emirates", "South Africa", "Egypt", "Nigeria", "Kenya", "Argentina", "Chile", "Colombia",
+        "Peru", "Venezuela", "New Zealand", "Singapore", "Thailand", "Malaysia", "Indonesia", "Vietnam", "Philippines",
+        "Pakistan", "Bangladesh", "Sri Lanka", "Qatar", "Kuwait", "Oman", "Bahrain", "Ireland", "Scotland", "Wales",
+        "Northern Ireland", "Estonia", "Latvia", "Lithuania", "Iceland", "Cyprus", "Malta", "Luxembourg", "Slovenia", "Slovakia",
+        "Croatia", "Bulgaria", "Romania", "Ukraine", "Serbia", "Montenegro", "Bosnia and Herzegovina", "Albania", "Macedonia", "Moldova",
+        "Belarus", "Georgia", "Armenia", "Azerbaijan", "Kazakhstan", "Uzbekistan", "Kyrgyzstan", "Tajikistan", "Turkmenistan", "Iran",
+        "Iraq", "Syria", "Lebanon", "Jordan", "Palestine"
+      ]; // Random countries
+
+      var transactionTypes = ["withdraw", "deposited"]; // Transaction types
+
+      var randomName = names[Math.floor(Math.random() * names.length)];
+      var randomCountry = countries[Math.floor(Math.random() * countries.length)];
+      var randomTransactionType = transactionTypes[Math.floor(Math.random() * transactionTypes.length)];
+
+      var signupPopup = document.getElementById("signupPopup");
+      var transactionPopup = document.getElementById("transactionPopup");
+      var signupMessage = document.getElementById("signupMessage");
+      var transactionMessage = document.getElementById("transactionMessage");
+
+      var popupText;
+
+      if (Math.random() < 0.5) {
+        // Show signup pop-up
+        popupText = "<span class='name'>" + randomName + "</span> from " + randomCountry + " just signed up now!";
+        signupMessage.innerHTML = popupText;
+        signupPopup.classList.add("show");
+        setTimeout(function() {
+          signupPopup.classList.remove("show");
+        }, 5000); // Hide signup pop-up after 5 seconds
+      } else {
+        // Show transaction pop-up
+        var randomAmount = Math.floor(Math.random() * 9901) + 100; // Random amount between £100 and £10,000
+        popupText = "<span class='name'>" + randomName + "</span> from " + randomCountry + "   " + randomTransactionType + "  £<span class='amount'>" + randomAmount.toLocaleString() + "</span>!";
+        transactionMessage.innerHTML = popupText;
+        transactionPopup.classList.add("show");
+        setTimeout(function() {
+          transactionPopup.classList.remove("show");
+        }, 5000); // Hide transaction pop-up after 5 seconds
+      }
+    }
+  </script>
+</body>
+</html>
